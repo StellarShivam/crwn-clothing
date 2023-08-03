@@ -7,6 +7,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
@@ -76,3 +77,9 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 };
 
 export const signOutUser = async () => await signOut(auth);
+
+export const onAuthStateChangedListener = (callback) => {
+  onAuthStateChanged(auth, callback);
+}; //what onAuthStateChanged does is that it will call this callback whenever the authentication state of our off singelton changes.
+//when a user signs in that's considered an OK change because the user has authenticated when a user signs out ,that's another change. So both time callback is going to be evoked whenever the user signs out and signs in.
+//this ia an open listener . This means that the moment you set it this thing is always waiting to see whether or not auth states are chaning and the moment it does ,it will run a callback.
